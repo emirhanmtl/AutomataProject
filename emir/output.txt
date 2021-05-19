@@ -8,4 +8,3 @@ Q3 1 Q4
 Q3 0 trap
 Q4 1 trap
 Q4 0 trap
-
