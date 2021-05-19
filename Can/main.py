@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import filedialog
-from PIL import Image,ImageTk
 from tkinter import *
 
 
@@ -10,7 +9,6 @@ pencere.title("Automata Project")
 pencere.geometry('1100x760+200+30') #birincisi genişlik ikinci yükseklik 3.x konumu 4.ykonumu
 pencere.config(bg='light gray')  #bg background
 pencere.iconbitmap('C://Users//suley//Desktop//logo.ico') #pencerenin logosu
-
 
 
 
@@ -59,7 +57,6 @@ def save_txt():
 
 my_text =Text(pencere,width=90,height=4,relief=tk.SUNKEN)
 my_text.place(x=120,y=73)
-
 
 
 
