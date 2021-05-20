@@ -3,19 +3,8 @@
 -GUİ Dosyası İlk 5 satırdaki kütüphaneleri ve komutları doğru import
 ettiğinizden emin olunuz.
 
--İmage dosyasını bilgisayarınıza indiriniz,dosya isimlerinde 
-oynama yapmamalısınız.İndirdiğiniz klasördeki resimlerin adresini
-kod'da güncelleyin.
-* 11. Satır  logo isimli resmi temsil eder.
-*27 ve 31. Satırlar KTU logolarını temsil eder.
-*206 ve 207. Satırlar Toggle buton resimlerini temsil eder.
-
-** Dosya konumlarını bulmak için ilgili dosyaya sağ tıklayın ve tam konumu kopyalayın. Lütfen konumu kopyaladığınızda "//" sembollerinin yönüne dikkat edin.
-Dosya Konumları "\" sembolü ile belirtilmekte ancak kullandığımız yazılım dili dolayısıyla bunları "//" olarak güncelleyiniz.
-
--Regular Expression girdisini sağlayan .Txt Dosyası için Metin Girdisi klasöründeki TXT dosyasını kullanınız.
-*Bu dosya için: 46, 48 ve 55. satırdaki dosya konumlarını yukarıdaki İmage dosyalarında belirttiğimiz gibi güncelleyiniz.
-
+-Image ve Metin Girdisi  dosyasını arayüz kodlarıyla aynı dizine indiriniz,dosya isimlerinde 
+oynama yapmamalısınız.
 
 2-Program Nasıl Kullanılır ?
 
