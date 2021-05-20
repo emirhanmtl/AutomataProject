@@ -1,6 +1,15 @@
 1- Program Kullanılmadan Önce Yapılması Gerekenler:
 
--GUİ Dosyası İlk 5 satırdaki kütüphaneleri ve komutları doğru import
+1.1
+
+-Google'a Graphviz yazıp sitesinden Graphviz.exe indirmeniz gerek.
+-Sistem ortam değişkenlerine "C:\Program Files\Graphviz\bin" i ekleyin.
+-graphviz modülünü dahil edin.
+input.txt ile aynı dizinde olması gerekli. Programı çalıştırınca bulunduğu dizine deneme.png ile graphı kaydeder.
+
+1.2
+
+-GUİ Dosyasındaki kütüphaneleri ve komutları doğru import
 ettiğinizden emin olunuz.
 
 -Image ve Metin Girdisi  dosyasını arayüz kodlarıyla aynı dizine indiriniz,dosya isimlerinde 
