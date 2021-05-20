@@ -8,7 +8,7 @@ pencere =tk.Tk()
 pencere.title("Automata Project")
 pencere.geometry('1100x760+200+30') #birincisi genişlik ikinci yükseklik 3.x konumu 4.ykonumu
 pencere.config(bg='light gray')  #bg background
-pencere.iconbitmap('İmage//logo.ico') #pencerenin logosu
+pencere.iconbitmap('Image//logo.ico') #pencerenin logosu
 
 
 
@@ -24,11 +24,11 @@ ekranYazisi3=tk.Label(pencere,text='Enter Test XxXx',fg='black',font='Times 10')
 ekranYazisi3.place(x=120,y=142)
 
 #KTU LOGOLARI
-logosol = PhotoImage(file=r"İmage//leftlogo.png") #amblemler
+logosol = PhotoImage(file=r"Image//leftlogo.png") #amblemler
 ekranYazisi4=tk.Label(pencere,image=logosol)
 ekranYazisi4.place(x=2,y=645)
 
-logosag=PhotoImage(file=r"İmage//rightlogo.png")
+logosag=PhotoImage(file=r"Image//rightlogo.png")
 ekranYazisi4=tk.Label(pencere,image=logosag)
 ekranYazisi4.place(x=1012,y=645)
 
@@ -203,8 +203,8 @@ def switch():
         toggleLabel.config(text="NFA", fg="green")
         is_nfa = True
 
-nfa = PhotoImage(file=r"İmage//nfa.png")
-dfa = PhotoImage(file=r"İmage//dfa.png")
+nfa = PhotoImage(file=r"Image//nfa.png")
+dfa = PhotoImage(file=r"Image//dfa.png")
 
 nfa_button = Button(pencere, image=nfa, bd=0, borderwidth=1,command=switch)
 nfa_button.place(x=480,y=240)
