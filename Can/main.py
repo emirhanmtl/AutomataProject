@@ -182,23 +182,111 @@ pencere.config(menu=menubar)
 
 #TOGGLE BUTON BOLUMU
 
+#TOGGLE BUTON BOLUMU
+
+
 is_nfa = True
 toggleLabel = Label(pencere, text="NFA",fg="green",font=("Helvetica bold", 15))
 toggleLabel.place(x=505,y=210)
 
 def switch():
-    global is_nfa
 
-    # Determin is on or off
+    global is_nfa
     if is_nfa:
+        from graphviz import Digraph
+
+        g = Digraph(format='png')
+        g.attr(size='10')
+
         nfa_button.config(image=dfa)
         toggleLabel.config(text="DFA", fg="red")
         is_nfa = False
+        f = open("output_re.txt", "r")
+        lines = f.readlines()
+        symbols = lines[0].rstrip().split()
+        nfa_states = lines[1].rstrip().split()
+        nfa_startingState = lines[2].rstrip()
+        nfa_finalStates = lines[3].rstrip().split()
+
+        for line in lines[4:]:
+            part = line.rstrip().split()
+
+            if (part[1] == '1'):
+                g.edge(part[0], part[2], label='1')
+
+            elif (part[1] == '0'):
+                g.edge(part[0], part[2], label='0')
+
+            elif (part[1] == 'ε'):
+                g.edge(part[0], part[2], label='ε')
+
+            else:
+                g.edge(part[0], part[2], label=part[1])
+
+        for i in nfa_states:
+            if (i == nfa_states[-1]):
+                g.node(i, i, shape='doublecircle')
+
+            else:
+                g.node(i, i, shape='circle')
+
+        g.render('graphdfa', view=False)
+        f.close()
+
+        graphPhotoDfa = PhotoImage(file=r"graphdfa.png")
+        ekranYazisi5 = tk.Label(pencere, image=graphPhotoDfa)
+        ekranYazisi5.place(x=100, y=250)
+        ekranYazisi5.configure(size='50')
+
+
     else:
+
+        from graphviz import Digraph
+
+        g = Digraph(format='png')
+        g.attr(size='10')
 
         nfa_button.config(image=nfa)
         toggleLabel.config(text="NFA", fg="green")
         is_nfa = True
+
+        f = open("output.txt", "r")
+        lines = f.readlines()
+        symbols = lines[0].rstrip().split()
+        nfa_states = lines[1].rstrip().split()
+        nfa_startingState = lines[2].rstrip()
+        nfa_finalStates = lines[3].rstrip().split()
+
+        for line in lines[4:]:
+            part = line.rstrip().split()
+
+            if (part[1] == '1'):
+                g.edge(part[0], part[2], label='1')
+
+            elif (part[1] == '0'):
+                g.edge(part[0], part[2], label='0')
+
+            elif (part[1] == 'ε'):
+                g.edge(part[0], part[2], label='ε')
+
+            else:
+                g.edge(part[0], part[2], label=part[1])
+
+        for i in nfa_states:
+            if (i == nfa_states[-1]):
+                g.node(i, i, shape='doublecircle')
+
+            else:
+                g.node(i, i, shape='circle')
+
+        g.render('graphnfa', view=False)
+        f.close()
+
+        graphPhotoNfa = PhotoImage(file=r"graphnfa.png")
+        ekranYazisi6 = tk.Label(pencere,image=graphPhotoNfa)
+        ekranYazisi6.place(x=250, y=250)
+        ekranYazisi6.config(size='50')
+
 
 nfa = PhotoImage(file=r"Image//nfa.png")
 dfa = PhotoImage(file=r"Image//dfa.png")
@@ -206,47 +294,7 @@ dfa = PhotoImage(file=r"Image//dfa.png")
 nfa_button = Button(pencere, image=nfa, bd=0, borderwidth=1,command=switch)
 nfa_button.place(x=480,y=240)
 
-"""****** EMIRHAN MUTLU  GRAPH KISMI ****** """
-g = Digraph(format='png')
-g.attr(size='10')
-f = open("input.txt", "r")
 
-lines = f.readlines()
-symbols = lines[0].rstrip().split()
-nfa_states = lines[1].rstrip().split()
-nfa_startingState = lines[2].rstrip()
-nfa_finalStates = lines[3].rstrip().split()
-
-for line in lines[4:]:
-    part = line.rstrip().split()
-    #print(part[0], part[2])
-
-    if (part[1] == '1'):
-        g.edge(part[0], part[2], label = '1')
-
-    elif (part[1] == '0'):
-        g.edge(part[0], part[2], label = '0')
-
-    elif (part[1] == 'ε'):
-        g.edge(part[0], part[2], label = 'ε')
-
-    else:
-        g.edge(part[0], part[2], label = part[1])
-
-for i in nfa_states:
-    if (i == nfa_states[-1]):
-        g.node(i, i, shape = 'doublecircle')
-
-    else:
-        g.node(i, i, shape = 'circle')
-
-g.render('graph',view = False)
-f.close()
-"""***************************************"""
-
-graphPhoto = PhotoImage(file=r"graph.png")
-ekranYazisi5=tk.Label(pencere,image=graphPhoto)
-ekranYazisi5.place(x=200,y=250)
 
 
 
