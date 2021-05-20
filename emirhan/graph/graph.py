@@ -1,69 +1,43 @@
 from graphviz import Digraph
 
 g = Digraph(format='png')
-g.attr(size='10')
+g.attr(size='100')
 x = input("NFA mı DFA mı: ")
 if (x == 'NFA'):
-
     f = open("output_re.txt", "r")
-    lines = f.readlines()
-    symbols = lines[0].rstrip().split()
-    nfa_states = lines[1].rstrip().split()
-    nfa_startingState = lines[2].rstrip()
-    nfa_finalStates = lines[3].rstrip().split()
-
-    for line in lines[4:]:
-        part = line.rstrip().split()
-
-        if (part[1] == '1'):
-            g.edge(part[0], part[2], label = '1')
-
-        elif (part[1] == '0'):
-            g.edge(part[0], part[2], label = '0')
-
-        elif (part[1] == 'ε'):
-            g.edge(part[0], part[2], label = 'ε')
-
-        else:
-            g.edge(part[0], part[2], label = part[1])
-
-    for i in nfa_states:
-        if (i == nfa_states[-1]):
-            g.node(i, i, shape = 'doublecircle')
-
-        else:
-            g.node(i, i, shape = 'circle')
 
 elif (x == 'DFA'):
     f = open("output.txt", "r")
-    lines = f.readlines()
-    symbols = lines[0].rstrip().split()
-    nfa_states = lines[1].rstrip().split()
-    nfa_startingState = lines[2].rstrip()
-    nfa_finalStates = lines[3].rstrip().split()
+else:
+    print("Hatalı Giriş!")
 
-    for line in lines[4:]:
-        part = line.rstrip().split()
-        # print(part[0], part[2])
+lines = f.readlines()
+symbols = lines[0].rstrip().split()
+nfa_states = lines[1].rstrip().split()
+nfa_startingState = lines[2].rstrip()
+nfa_finalStates = lines[3].rstrip().split()
 
-        if (part[1] == '1'):
-            g.edge(part[0], part[2], label='1')
+for line in lines[4:]:
+    part = line.rstrip().split()
 
-        elif (part[1] == '0'):
-            g.edge(part[0], part[2], label='0')
+    if (part[1] == '1'):
+        g.edge(part[0], part[2], label='1')
 
-        elif (part[1] == 'ε'):
-            g.edge(part[0], part[2], label='ε')
+    elif (part[1] == '0'):
+        g.edge(part[0], part[2], label='0')
 
-        else:
-            g.edge(part[0], part[2], label=part[1])
+    elif (part[1] == 'ε'):
+        g.edge(part[0], part[2], label='ε')
 
-    for i in nfa_states:
-        if (i == nfa_states[-1]):
-            g.node(i, i, shape='doublecircle')
+    else:
+        g.edge(part[0], part[2], label=part[1])
 
-        else:
-            g.node(i, i, shape='circle')
+for i in nfa_states:
+    if (i == nfa_states[-1]):
+        g.node(i, i, shape='doublecircle')
 
-g.render('graph', view = True)
+    else:
+        g.node(i, i, shape='circle')
+
+g.render('graph', view = False)
 f.close()
