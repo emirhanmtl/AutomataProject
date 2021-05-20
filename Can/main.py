@@ -32,19 +32,16 @@ logosag=PhotoImage(file=r"Image//rightlogo.png")
 ekranYazisi4=tk.Label(pencere,image=logosag)
 ekranYazisi4.place(x=1012,y=645)
 
-#GIRDILER
-
-"""girdi1=tk.Entry(pencere,fg='red',font='Times',bd=10,width=70,relief=tk.GROOVE,cursor="arrow") #relief methodu arka kabartması
-girdi1.place(x=120,y=90)
-"""
+#GIRDI
 
 girdi=tk.Entry(pencere,fg='red',font='Times',bd=10,width=70,relief=tk.GROOVE,cursor="arrow")#cursor imlecin sembolü
 girdi.place(x=120,y=165)
 
 #TEXT BOLUMU
+
 def open_txt():
     text_file =filedialog.askopenfilename(initialdir="//Desktop",title='Open Text File',filetypes=(("Text Files","*.txt"),))
-    ##bu dosyayı açma kısmı initialdirdeki kısımda açar direk ekranını,filetypesda sadece o tipleri açmasını sağlar
+    #bu dosyayı açma kısmı initialdirdeki kısımda açar direk ekranını,filetypesda sadece o tipleri açmasını sağlar
     text_file = open("Metin Girdisi/MetinGirdisi.txt", 'r')
     stuff = text_file.read()
 
@@ -112,7 +109,7 @@ listBox_0.selection_set(0) #activate first index
 #GENEL FONKSIYONLAR
 
 
-def fulEkran():
+def tamEkran():
     pencere.state('zoomed')
 
 def normalEkran():
@@ -160,7 +157,7 @@ buton4.place(x=850,y=160)
 menubar=Menu(pencere)
 
 file=Menu(menubar,tearoff=0)
-file.add_command(label="Full Screen",command=fulEkran)
+file.add_command(label="Full Screen",command=tamEkran)
 file.add_separator() #menu seçenekleri arasına çizgi koymaya yarar
 file.add_command(label="Normal Screen",command=normalEkran)
 file.add_separator()
