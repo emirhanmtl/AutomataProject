@@ -8,7 +8,7 @@ pencere =tk.Tk()
 pencere.title("Automata Project")
 pencere.geometry('1100x760+200+30') #birincisi genişlik ikinci yükseklik 3.x konumu 4.ykonumu
 pencere.config(bg='light gray')  #bg background
-pencere.iconbitmap('C://Users//suley//Desktop//logo.ico') #pencerenin logosu
+pencere.iconbitmap('İmage//logo.ico') #pencerenin logosu
 
 
 
@@ -24,11 +24,11 @@ ekranYazisi3=tk.Label(pencere,text='Enter Test XxXx',fg='black',font='Times 10')
 ekranYazisi3.place(x=120,y=142)
 
 #KTU LOGOLARI
-logosol = PhotoImage(file=r"C://Users//suley//Desktop//leftlogo.png") #amblemler
+logosol = PhotoImage(file=r"İmage//leftlogo.png") #amblemler
 ekranYazisi4=tk.Label(pencere,image=logosol)
 ekranYazisi4.place(x=2,y=645)
 
-logosag=PhotoImage(file=r"C://Users//suley//Desktop//rightlogo.png")
+logosag=PhotoImage(file=r"İmage//rightlogo.png")
 ekranYazisi4=tk.Label(pencere,image=logosag)
 ekranYazisi4.place(x=1012,y=645)
 
@@ -43,16 +43,16 @@ girdi.place(x=120,y=165)
 
 #TEXT BOLUMU
 def open_txt():
-    text_file =filedialog.askopenfilename(initialdir="C://Users//suley//Desktop",title='Open Text File',filetypes=(("Text Files","*.txt"),))
+    text_file =filedialog.askopenfilename(initialdir="//Desktop",title='Open Text File',filetypes=(("Text Files","*.txt"),))
     ##bu dosyayı açma kısmı initialdirdeki kısımda açar direk ekranını,filetypesda sadece o tipleri açmasını sağlar
-    text_file = open("C://Users//suley//Desktop//MetinGirdisi.txt",'r')
+    text_file = open("Metin Girdisi/MetinGirdisi.txt", 'r')
     stuff = text_file.read()
 
     my_text.insert(END,stuff)
     text_file.close()
 
 def save_txt():
-    text_file = open("C://Users//suley//Desktop//MetinGirdisi.txt", 'w')
+    text_file = open("Metin Girdisi/MetinGirdisi.txt", 'w')
     text_file.write(my_text.get(1.0,END))
 
 my_text =Text(pencere,width=90,height=4,relief=tk.SUNKEN)
@@ -203,8 +203,8 @@ def switch():
         toggleLabel.config(text="NFA", fg="green")
         is_nfa = True
 
-nfa = PhotoImage(file=r"C://Users//suley//Desktop//nfa.png")
-dfa = PhotoImage(file=r"C://Users//suley//Desktop//dfa.png")
+nfa = PhotoImage(file=r"İmage//nfa.png")
+dfa = PhotoImage(file=r"İmage//dfa.png")
 
 nfa_button = Button(pencere, image=nfa, bd=0, borderwidth=1,command=switch)
 nfa_button.place(x=480,y=240)
