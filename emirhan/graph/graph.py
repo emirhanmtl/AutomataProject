@@ -12,7 +12,7 @@ nfa_finalStates = lines[3].rstrip().split()
 
 for line in lines[4:]:
     part = line.rstrip().split()
-    print(part[0], part[2])
+    #print(part[0], part[2])
 
     if (part[1] == '1'):
         g.edge(part[0], part[2], label = '1')
