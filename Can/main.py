@@ -240,7 +240,7 @@ for i in nfa_states:
     else:
         g.node(i, i, shape = 'circle')
 
-g.render(view = False)
+g.render('graph',view = False)
 f.close()
 """***************************************"""
 
