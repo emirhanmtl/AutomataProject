@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import *
-
+from graphviz import Digraph #Nasıl Kullanılır kısmındaki yönergelerle graphviz ekleyin
 
 #pencere özellikleri
 pencere =tk.Tk()
@@ -20,7 +20,7 @@ ekranYazisi1.pack()
 ekranYazisi2=tk.Label(pencere,text='Open Text File',fg='black',font='Times 10')
 ekranYazisi2.place(x=120,y=50)
 
-ekranYazisi3=tk.Label(pencere,text='Enter Test XxXx',fg='black',font='Times 10')
+ekranYazisi3=tk.Label(pencere,text='Enter Test Expression',fg='black',font='Times 10')
 ekranYazisi3.place(x=120,y=142)
 
 #KTU LOGOLARI
@@ -205,6 +205,42 @@ dfa = PhotoImage(file=r"Image//dfa.png")
 
 nfa_button = Button(pencere, image=nfa, bd=0, borderwidth=1,command=switch)
 nfa_button.place(x=480,y=240)
+
+"""****** EMIRHAN MUTLU  GRAPH KISMI ****** """
+
+g = Digraph(format = 'png')
+g.attr(size = '5')
+f = open("input.txt","r")
+
+lines = f.readlines()
+symbols = lines[0].rstrip().split()
+nfa_states = lines[1].rstrip().split()
+nfa_startingState = lines[2].rstrip()
+nfa_finalStates = lines[3].rstrip().split()
+for line in lines[4:]:
+    part = line.rstrip().split()
+    print(part[0],part[2])
+    if (part[1] == '1'):
+        g.edge(part[0], part[2], label = '1')
+    elif (part[1] == '0'):
+        g.edge(part[0], part[2], label = '0')
+    else:
+        g.edge(part[0], part[2], label = 'ε')
+
+for i in nfa_states:
+    if (i == nfa_states[-1]):
+        g.node(i, i, shape = 'doublecircle')
+    else:
+        g.node(i, i, shape = 'circle')
+
+g.render('graph', view = False)
+f.close()
+
+"""***************************************"""
+
+graphPhoto = PhotoImage(file=r"graph.png")
+ekranYazisi5=tk.Label(pencere,image=graphPhoto)
+ekranYazisi5.place(x=200,y=250)
 
 
 
