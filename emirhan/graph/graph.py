@@ -33,5 +33,5 @@ for i in nfa_states:
     else:
         g.node(i, i, shape = 'circle')
 
-g.render(view = True)
+g.render(view = False)
 f.close()
