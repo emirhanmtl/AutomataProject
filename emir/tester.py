@@ -41,7 +41,7 @@ while (True):
     for char in inputStr:
         try:
             ps = transmissions[ps][symbols.index(char)]
-        except KeyError:
+        except KeyError: #It will keep working if 'trap' statement comes.
             continue
 
 
