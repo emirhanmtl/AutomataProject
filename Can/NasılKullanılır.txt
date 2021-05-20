@@ -33,4 +33,4 @@ Dosya Konumları "\" sembolü ile belirtilmekte ancak kullandığımız yazılı
 -"Edit" Menüsü ile GUI arkaplan rengini değiştirebilir,saydamlık ayarı yapabilirsiniz.
 
 
-Not:Ana Pencerenin konumlandırması vb. özellikleri bilgisayar ve ekran özelliklerine göre farklılık gösterebilir.
+Not:Ana Pencerenin konumlandırılması vb. özellikleri bilgisayar ve ekran özelliklerine göre farklılık gösterebilir.
