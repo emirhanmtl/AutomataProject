@@ -1,5 +1,3 @@
-from collections import Counter
-
 # read data from text file
 f = open("output.txt", 'r')
 symbols = f.readline().split()
@@ -8,6 +6,16 @@ start_state = f.readline().strip()
 finish_states = f.readline().split()
 # transmisions is our delta
 transmissions = {}
+
+def letter_counter(input): #For counting the letters.
+    dict = {}
+    for l in input:
+        keys = dict.keys()
+        if l in keys:
+            dict[l] += 1
+        else:
+            dict[l] = 1
+    return dict
 
 # for reducing memory usage we use list for transmision and dicuse it in worksheet
 for x in states:
@@ -28,7 +36,7 @@ while (True):
 
     # here we check if input string contains some letters that we dont have them in out symbols
     # warn the user and wants input new string
-    string_letters = list(Counter(inputStr).keys())
+    string_letters = list(letter_counter(inputStr).keys())
     if set(string_letters) - set(symbols) == set():
         pass
     else:
