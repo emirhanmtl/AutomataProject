@@ -1,60 +1,53 @@
-# read data from text file
-f = open("output_dfa.txt", 'r')
-symbols = f.readline().split()
-states = f.readline().split()
-start_state = f.readline().strip()
-finish_states = f.readline().split()
-# transmisions is our delta
-transmissions = {}
+def main():
+    import random
+    f = open("output.txt", 'r')
+    symbols = f.readline().split()
+    states = f.readline().split()
+    start_state = f.readline().strip()
+    finish_states = f.readline().split()
 
-def letter_counter(input): #For counting the letters.
-    dict = {}
-    for l in input:
-        keys = dict.keys()
-        if l in keys:
-            dict[l] += 1
+    transmissions = {}
+
+
+    def letter_counter(input):
+        dict = {}
+        for L in input:
+            keys = dict.keys()
+            if L in keys:
+                dict[L] += 1
+            else:
+                dict[L] = 1
+        return dict
+
+
+    for x in states:
+        transmissions[x] = [None] * len(symbols)
+
+
+    for i in range(len(symbols) * len(states)):
+        trans = f.readline().split()
+        alp_index = symbols.index(trans[1])
+        transmissions[trans[0]][alp_index] = trans[2]
+
+    while True:
+        inputStr = input()
+        if inputStr == "exit":
+            break
+        deck = list(symbols)
+        length = ['1', '2', '3', '4', '5', '6', '7', '8']
+        y = ''.join(random.choices(length))
+        y = int(y)
+        result = ''.join(random.choices(deck, k=y))
+        ps = start_state
+        for char in result:
+            try:
+                ps = transmissions[ps][symbols.index(char)]
+            except KeyError:
+                continue
+
+        if ps in finish_states:
+            print('\033[92m', result)
         else:
-            dict[l] = 1
-    return dict
-
-# for reducing memory usage we use list for transmision and dicuse it in worksheet
-for x in states:
-    transmissions[x] = [None] * len(symbols)
-
-# here we dont use while loop because we are sure that each dfa delta function for every state has vertex by number of symbols letters
-for i in range(len(symbols) * len(states)):
-    trans = f.readline().split()
-    alp_index = symbols.index(trans[1])
-    transmissions[trans[0]][alp_index] = trans[2]
-# print(transmissions)
-
-
-while (True):
-    inputStr = input("input your string : ")
-    if inputStr == "exit":
-        break
-
-    # here we check if input string contains some letters that we dont have them in out symbols
-    # warn the user and wants input new string
-    string_letters = list(letter_counter(inputStr).keys())
-    if set(string_letters) - set(symbols) == set():
-        pass
-    else:
-        print("your string contains some letters that is not in your dfa symbols")
-        print("try again")
-        continue
-
-    # ps is stand for present state
-    ps = start_state
-    for char in inputStr:
-        try:
-            ps = transmissions[ps][symbols.index(char)]
-        except KeyError: #It will keep working if 'trap' statement comes.
-            continue
-
-
-    # after iteration bt symbols and
-    if (ps in finish_states):
-        print("String is accepted.")
-    else:
-        print("string is not accepted")
+            print('\033[91m', result)
+if __name__ == '__main__':
+    main()

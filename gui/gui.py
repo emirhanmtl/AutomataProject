@@ -3,8 +3,10 @@ from tkinter import filedialog
 from tkinter import *
 from graphviz import Digraph
 import re2nfa
+import nfa2dfa
+import tester
 
-re2nfa.main()
+
 
 
 """Pencere özellikleri"""
@@ -60,16 +62,22 @@ my_text.place(x=120,y=73)
 
 def regex():
     text_file = open("input.txt", 'r+')
-    stuff= text_file.read()
-
+    stuff = text_file.read()
     regex_text.insert(END, stuff)
     text_file.write(regex_text.get(1.0, END))
     text_file.close()
+    re2nfa.main()
+    nfa2dfa.main()
+    tester.main()
+
+
+    open("input.txt", "w").close()
+
 
 def regexClear():
     regex_text.delete(1.0,END)
 
-regex_text= Text(pencere,fg='red',font='Times',relief=tk.FLAT,width=90,height=2)
+regex_text=Text(pencere,fg='red',font='Times',relief=tk.FLAT,width=90,height=2)
 regex_text.place(x=120,y=165)
 
 buton4=tk.Button(text='Execute',fg='white',font='Times',bg='red',borderwidth=4,command=regex)
@@ -77,6 +85,7 @@ buton4.place(x=850,y=165)
 
 buton5=tk.Button(text='Clear',fg='white',font='Times',bg='red',borderwidth=4,command=regexClear)
 buton5.place(x=930,y=165)
+
 
 
 
@@ -313,7 +322,6 @@ dfa = PhotoImage(file=r"Image//dfa.png")
 
 nfa_button = Button(pencere, image=nfa, bd=0, borderwidth=1,command=switch)
 nfa_button.place(x=480,y=240)
-
 
 
 
