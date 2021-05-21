@@ -1,5 +1,5 @@
 # read data from text file
-f = open("output.txt", 'r')
+f = open("output_dfa.txt", 'r')
 symbols = f.readline().split()
 states = f.readline().split()
 start_state = f.readline().strip()
