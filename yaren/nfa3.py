@@ -20,31 +20,14 @@ def Union(lst1, lst2):
     final_list = list(set(lst1) | set(lst2))
     return final_list
 
+precedence = {'(': 1, '|': 2, '.': 3, '?': 4, '*': 4, '+': 4, '^': 5}
 def getprecedence(c):
     if (c in precedence):
         return precedence[c]
     else:
         return 6
-def formatregex(infix):
-    result = ''
-    allOperators = ['|', '?', '+', '*']
-    binaryOperators = ['|']
-    i = 0;
-    for c1 in infix:
-        if i + 1 < len(infix):
-            c2 = infix[i + 1]
 
-            result += c1
 
-            if (c1 != '(' and c2 != ')' and c2 not in allOperators and c1 not in binaryOperators):
-                result += '.'
-        i += 1
-
-    result += infix[len(infix) - 1]
-
-    return result;
-
-precedence = {'(': 1, '|': 2, '.': 3, '?': 4, '*': 4, '+': 4, '^': 5}
 
 # infix to postfix
 def toPostfix(infix):
@@ -52,9 +35,9 @@ def toPostfix(infix):
 
     stack = []
 
-    formattedRegex = formatregex(infix);
 
-    for c in formattedRegex:
+
+    for c in infix:
         if c == '(':
             stack.append(c);
         elif c == ')':
