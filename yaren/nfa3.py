@@ -66,7 +66,7 @@ class Handler:
 
     def create_state(self):
         self.state_count += 1
-        return State('q' + str(self.state_count))
+        return State('Q' + str(self.state_count))
     def handle_char(self, t, nfa_stack):
         s0 = self.create_state()
         s1 = self.create_state()
@@ -96,7 +96,7 @@ class Handler:
         nfa.state_set = Union(n1.state_set, n2.state_set)
         nfa.state_set.extend([s0, s3])
         nfa.transitions = Union(n1.transitions, n2.transitions)
-        nfa.transitions.extend([(s0, ' ', n1.start), (s0, ' ', n2.start), (n1.end, ' ', s3), (n2.end, ' ', s3)])
+        nfa.transitions.extend([(s0, 'Îµ', n1.start), (s0, 'Îµ', n2.start), (n1.end, 'Îµ', s3), (n2.end, 'Îµ', s3)])
         nfa_stack.append(nfa)
     def handle_concat(self, t, nfa_stack,infix):
         n2 = nfa_stack.pop()
@@ -120,7 +120,7 @@ class Handler:
         nfa_stack.append(nfa)
 
 def main():
-    infix = input('regex: ')
+    infix = input('please enter RE: ')
     infix = infix.replace(' ', 'ε')
     postfix = toPostfix(infix)
     print(postfix)
@@ -138,12 +138,12 @@ def main():
 
     result = nfa_stack.pop()
     resultString = ''
-    for s in result.state_set:
-        resultString += s.name + ','
+    for a in result.alphabet:
+        resultString += a + ' '
     resultString = resultString[:len(resultString) - 1]
     resultString += '\n'
-    for a in result.alphabet:
-        resultString += a + ','
+    for s in result.state_set:
+        resultString += s.name + ' '
     resultString = resultString[:len(resultString) - 1]
     resultString += '\n'
     resultString += result.start.name
@@ -151,7 +151,7 @@ def main():
     resultString += result.end.name
     resultString += '\n'
     for t in result.transitions:
-        resultString +=  '('+ str(t[0].name) + ',' + str(t[1]) + ', ' + str(t[2].name) + ')' + ','
+        resultString += str(t[0].name) + ' ' + str(t[1]) + ' ' + str(t[2].name) + '\n'
     resultString = resultString[:len(resultString) - 1]
 
     text_file = open('nfa_output.txt', 'w')
@@ -161,5 +161,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
