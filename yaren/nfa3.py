@@ -51,9 +51,7 @@ def toPostfix(infix):
 
 
 class State:
-    label = None
-    edge1 = None
-    edge2 = None
+    
     def __init__(self, name):
         self.epsilon = []  # epsilon-closure
         self.transitions = {}  # char : state
