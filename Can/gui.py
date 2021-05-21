@@ -1,9 +1,13 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import *
-from graphviz import Digraph #Nasıl Kullanılır kısmındaki yönergelerle graphviz ekleyin
+from graphviz import Digraph
+import re2nfa
 
-#pencere özellikleri
+re2nfa.main()
+
+
+"""Pencere özellikleri"""
 pencere =tk.Tk()
 pencere.title("Automata Project")
 pencere.geometry('1100x760+200+30') #birincisi genişlik ikinci yükseklik 3.x konumu 4.ykonumu
@@ -12,7 +16,7 @@ pencere.iconbitmap('Image//logo.ico') #pencerenin logosu
 
 
 
-#GENEL YAZILAR
+"""GENEL YAZILAR"""
 
 ekranYazisi1=tk.Label(pencere,text='RE 2 NFA-DFA',fg='black',font='Times 15 ') #fg yazının rengi
 ekranYazisi1.pack()
@@ -20,7 +24,7 @@ ekranYazisi1.pack()
 ekranYazisi2=tk.Label(pencere,text='Open Text File',fg='black',font='Times 10')
 ekranYazisi2.place(x=120,y=50)
 
-ekranYazisi3=tk.Label(pencere,text='Enter Test Expression',fg='black',font='Times 10')
+ekranYazisi3=tk.Label(pencere,text='Enter Regular Expression',fg='black',font='Times 10')
 ekranYazisi3.place(x=120,y=142)
 
 #KTU LOGOLARI
@@ -32,31 +36,51 @@ logosag=PhotoImage(file=r"Image//rightlogo.png")
 ekranYazisi4=tk.Label(pencere,image=logosag)
 ekranYazisi4.place(x=1012,y=645)
 
-#GIRDI
 
-girdi=tk.Entry(pencere,fg='red',font='Times',bd=10,width=70,relief=tk.GROOVE,cursor="arrow")#cursor imlecin sembolü
-girdi.place(x=120,y=165)
 
-#TEXT BOLUMU
+"""TEXT BOLUMU"""
 
 def open_txt():
     text_file =filedialog.askopenfilename(initialdir="//Desktop",title='Open Text File',filetypes=(("Text Files","*.txt"),))
-    #bu dosyayı açma kısmı initialdirdeki kısımda açar direk ekranını,filetypesda sadece o tipleri açmasını sağlar
-    text_file = open("Metin Girdisi/MetinGirdisi.txt", 'r')
+    ##bu dosyayı açma kısmı initialdirdeki kısımda açar direk ekranını,filetypesda sadece o tipleri açmasını sağlar
+    text_file = open("input_re.txt", 'r')
     stuff = text_file.read()
 
     my_text.insert(END,stuff)
     text_file.close()
 
 def save_txt():
-    text_file = open("Metin Girdisi/MetinGirdisi.txt", 'w')
-    text_file.write(my_text.get(1.0,END))
+    text_file = open("input_re.txt", 'w')
+    text_file.write(my_text.get(1.0, END))
 
-my_text =Text(pencere,width=90,height=4,relief=tk.SUNKEN)
+my_text =Text(pencere,width=90,height=4)
 my_text.place(x=120,y=73)
 
+"""REGEX TEXT BOLUMU"""
 
-#LISTBOX SCROLLBAR VE BUTONLARI
+def regex():
+    text_file = open("input.txt", 'r+')
+    stuff= text_file.read()
+
+    regex_text.insert(END, stuff)
+    text_file.write(regex_text.get(1.0, END))
+    text_file.close()
+
+def regexClear():
+    regex_text.delete(1.0,END)
+
+regex_text= Text(pencere,fg='red',font='Times',relief=tk.FLAT,width=90,height=2)
+regex_text.place(x=120,y=165)
+
+buton4=tk.Button(text='Execute',fg='white',font='Times',bg='red',borderwidth=4,command=regex)
+buton4.place(x=850,y=165)
+
+buton5=tk.Button(text='Clear',fg='white',font='Times',bg='red',borderwidth=4,command=regexClear)
+buton5.place(x=930,y=165)
+
+
+
+"""LISTBOX SCROLLBAR VE BUTONLARI"""
 
 my_frame = Frame(pencere) #listboxda scrollbarda frame e göre konumlanıyor daha rahat edebilmek adına framei kullanıyoruz
 my_frame.place(x=550,y=300)
@@ -106,7 +130,7 @@ listBox_0.selection_set(0) #activate first index
 
 
 
-#GENEL FONKSIYONLAR
+"""GENEL FONKSIYONLAR"""
 
 
 def tamEkran():
@@ -136,7 +160,7 @@ def clear():
     my_text.delete(1.0,END)
 
 
-#GENEL BUTONLAR
+"""GENEL BUTONLAR"""
 
 buton1=tk.Button(text='Open',fg='white',font='Times',bg='red',borderwidth=4,command=open_txt) #borderwith buton genisligi
 buton1.place(x=850,y=85)
@@ -147,12 +171,10 @@ buton2.place(x=920,y=85)
 buton3=tk.Button(text='Clear',fg='white',font='Times',bg='red',borderwidth=4,command=clear) #borderwidth buton genişliği
 buton3.place(x=990,y=85)
 
-buton4=tk.Button(text='Execute',fg='white',font='Times',bg='red',borderwidth=4)
-buton4.place(x=850,y=160)
 
 
 
-#MENU BOLUMU
+"""MENU BOLUMU"""
 
 menubar=Menu(pencere)
 
@@ -180,9 +202,7 @@ menubar.add_cascade(label='Edit',font='Times',menu=duzen) #ismi
 pencere.config(menu=menubar)
 
 
-#TOGGLE BUTON BOLUMU
-
-#TOGGLE BUTON BOLUMU
+"""#TOGGLE BUTON VE DURUM DİYAGRAMLARI BOLUMU """
 
 
 is_nfa = True
@@ -250,7 +270,7 @@ def switch():
         toggleLabel.config(text="NFA", fg="green")
         is_nfa = True
 
-        f = open("output.txt", "r")
+        f = open("output_dfa.txt", "r")
         lines = f.readlines()
         symbols = lines[0].rstrip().split()
         nfa_states = lines[1].rstrip().split()
@@ -284,7 +304,7 @@ def switch():
 
         graphPhotoNfa = PhotoImage(file=r"graphnfa.png")
         ekranYazisi6 = tk.Label(pencere,image=graphPhotoNfa)
-        ekranYazisi6.place(x=250, y=250)
+        ekranYazisi6.place(x=230, y=250)
         ekranYazisi6.config(size='50')
 
 
@@ -299,4 +319,3 @@ nfa_button.place(x=480,y=240)
 
 
 pencere.mainloop()
-
