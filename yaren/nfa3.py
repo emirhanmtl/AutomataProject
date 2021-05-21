@@ -84,7 +84,8 @@ class Handler:
         s1 = self.create_state()
         s0.transitions[t] = s1
         nfa = NFA(s0, s1)
-
+        if t not in nfa.alphabet:
+            nfa.alphabet.append(t)
         nfa.state_set.append(s0)
         nfa.state_set.append(s1)
         nfa.transitions.append((s0, t, s1))
@@ -114,15 +115,15 @@ class Handler:
         n2 = nfa_stack.pop()
         n1 = nfa_stack.pop()
         nfa = NFA(n1.start, n2.end)
-        for i in infix:
-            if i in alphabet:
-                nfa.alphabet.append(i)
+        nfa.alphabet = Union(n1.alphabet, n2.alphabet)
 
+        n1.end.epsilon.append(n2.start)
         nfa.state_set = Union(n1.state_set, n2.state_set)
         nfa.state_set.remove(n1.end)
         nfa.transitions = Union(n1.transitions, n2.transitions)
         newtransitions = []
         for t in nfa.transitions:
+
             if (t[2] == n1.end):
                 r = (t[0], t[1], n2.start)
                 t = r
