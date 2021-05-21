@@ -1,8 +1,8 @@
 #Automata Theory project
 #KTÜ
 
-#Getting the data from .txt file.
-f = open("input.txt","r")
+# .txt dosyasından veriler alınıyor.
+f = open("output_re.txt","r")
 lines = f.readlines()
 symbols = lines[0].rstrip().split()
 nfa_states = lines[1].rstrip().split()
@@ -15,7 +15,7 @@ for line in lines[4:]:
 
 f.close()
 
-#For getting the next state.
+#Mevzubahis state'in sonraki statelerini alabilmek için.
 def get_nextState(current_state, movement):
     potential_states = []
     for state in nfa_transitions:
@@ -28,7 +28,7 @@ def get_nextState(current_state, movement):
 
 ########### Epsilon-NFA to NFA ###########
 
-#For getting the states, which have connections with epsilon.
+#Epsilon ile ilişkisi bulunan stateleri almak için.
 def related_epsilon(state):
     related_states = [state]
     registor = [state]
@@ -45,19 +45,21 @@ def related_epsilon(state):
     return related_states
 
 
-#Getting the next states without lambda
+#Epsilon ile ilişkisi bulunmayan state'leri almak için.
 def nextState_without_epsilon(current_state,movement):
     potential_states = []
 
-    lambda_cl = related_epsilon(current_state)
+    rltd_epsilon = related_epsilon(current_state)
     temporary_states = []
 
-    for state in lambda_cl:
+    #küme içindeki herşeyin next state'ini bulmak için.
+    for state in rltd_epsilon:
         next_states = get_nextState(state, movement)
         if next_states is not None:
             for s in next_states:
                 if s not in temporary_states:
                     temporary_states.append(s)
+
 
     for state in temporary_states:
         temporary_states = related_epsilon(state)
@@ -66,6 +68,7 @@ def nextState_without_epsilon(current_state,movement):
                 if s not in potential_states:
                     potential_states.append(s)
 
+    #potansiyel state olup olmadığını kontrol etmek için.
     if len(potential_states) != 0:
         return potential_states
     else:
@@ -74,7 +77,7 @@ def nextState_without_epsilon(current_state,movement):
 ########### Epsilon-NFA to NFA ###########
 
 
-#Assigning the DFA variables from translation.
+#DFA verilerini yerleştirme.
 dfa_startingState = related_epsilon(nfa_startingState)
 dfa_startingState.sort()
 
@@ -82,7 +85,7 @@ dfa_states = [dfa_startingState]
 dfa_transitions = []
 dfa_final_states = []
 
-#For fixing the final states.
+#Aynı zamanda hem start state hem accept state olanların kontrolü. Eğer öyle ise start'ı, accept state'e ekliyoruz.
 for f in nfa_finalStates:
     if f in dfa_startingState:
         dfa_final_states.append(dfa_startingState)
@@ -90,41 +93,43 @@ for f in nfa_finalStates:
 remaining_states = [dfa_startingState]
 registor = [dfa_startingState]
 
-
+#elimizdekiler bitene kadar döngüye devam.
 while len(remaining_states) != 0 :
-    #For checking all the states
+    #Teker teker tüm stateleri kontrol edip transitionları ve next stateleri düzenliyoruz.
     for letter in symbols:
         states = []
         for remaining_state in remaining_states[0]:
+            #harf ile gelen bütün next state'leri bulmak için.
             next_states = nextState_without_epsilon(remaining_state,letter)
             if next_states is not None:
                 for next_state in next_states:
                     if next_state not in states:
                         states.append(next_state)
 
-
+        #sonraki statelerin eklenmesi.
         if len(states) != 0:
             dfa_transitions.append([remaining_states[0], letter, states])
             states.sort()
 
+            #statelerde tekrar olup olmadığı..
             if states not in dfa_states:
                 dfa_states.append(states)
                 remaining_states.append(states)
 
-
+            #final states düzenlemesi.
             for f_state in nfa_finalStates:
                 if (f_state in states) and (states not in dfa_final_states):
                     dfa_final_states.append(states)
         else:
-            #trap state.
+            #trap state. eğer next state yok ise buraya yönlendirilecek.
             dfa_transitions.append([remaining_states[0], letter, 'trap'])
     remaining_states.pop(0)
 
 
-########### Sending to .txt file. ###########
+########### text dosyasına yollama kısmı. ###########
 
 
-f = open("output.txt","w+")
+f = open("output_dfa.txt","w+")
 
 for s in symbols:
     f.write(f"{s} ")
@@ -145,4 +150,4 @@ for state in dfa_transitions:
     f.write(f"{''.join(list(state[0]))} {state[1]} {''.join(list(state[2]))}")
     f.write('\n')
 
-print("done.")
+print("done")
