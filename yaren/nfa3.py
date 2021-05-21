@@ -132,45 +132,50 @@ class Handler:
         nfa_stack.append(nfa)
 
 def main():
-    with open('input.txt', 'r') as file:
-        infix = file.read().replace('\n', '')
-    infix = infix.replace(' ', 'ε')
-    postfix = toPostfix(infix)
-    print(postfix)
-    allOperators = [star,line,dot]
-    handler = Handler()
-    nfa_stack = []
-    for c in postfix:
-        if c not in allOperators:
-            handler.handle_char(c, nfa_stack)
-        elif c == line:
-            handler.handle_alt(c, nfa_stack,infix)
-        elif c == dot:
-            handler.handle_concat(c, nfa_stack,infix)
+    def file():
+        with open('input.txt', 'r') as file:
+            infix = file.read().replace('\n', '')
+        infix = infix.replace(' ', 'ε')
+        postfix = toPostfix(infix)
+        print(postfix)
+
+        allOperators = [star,line,dot]
+        handler = Handler()
+        nfa_stack = []
+        for c in postfix:
+            if c not in allOperators:
+                handler.handle_char(c, nfa_stack)
+            elif c == line:
+                handler.handle_alt(c, nfa_stack,infix)
+            elif c == dot:
+                handler.handle_concat(c, nfa_stack,infix)
 
 
-    result = nfa_stack.pop()
-    resultString = ''
-    for a in result.alphabet:
-        resultString += a + ' '
-    resultString = resultString[:len(resultString) - 1]
-    resultString += '\n'
-    for s in result.state_set:
-        resultString += s.name + ' '
-    resultString = resultString[:len(resultString) - 1]
-    resultString += '\n'
-    resultString += result.start.name
-    resultString += '\n'
-    resultString += result.end.name
-    resultString += '\n'
-    for t in result.transitions:
-        resultString += str(t[0].name) + ' ' + str(t[1]) + ' ' + str(t[2].name) + '\n'
-    resultString = resultString[:len(resultString) - 1]
+        result = nfa_stack.pop()
+        resultString = ''
+        for a in result.alphabet:
+            resultString += a + ' '
+        resultString = resultString[:len(resultString) - 1]
+        resultString += '\n'
+        for s in result.state_set:
+            resultString += s.name + ' '
+        resultString = resultString[:len(resultString) - 1]
+        resultString += '\n'
+        resultString += result.start.name
+        resultString += '\n'
+        resultString += result.end.name
+        resultString += '\n'
+        for t in result.transitions:
+            resultString += str(t[0].name) + ' ' + str(t[1]) + ' ' + str(t[2].name) + '\n'
+        resultString = resultString[:len(resultString) - 1]
 
-    text_file = open('nfa_output.txt', 'w')
-    text_file.write(resultString)
-    text_file.close()
+        text_file = open('nfa_output.txt', 'w')
+        text_file.write(resultString)
+        text_file.close()
 
-
+    try:
+        file()
+    except:
+        print("empty file")
 if __name__ == '__main__':
     main()
