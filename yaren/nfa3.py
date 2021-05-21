@@ -20,38 +20,69 @@ def Union(lst1, lst2):
     final_list = list(set(lst1) | set(lst2))
     return final_list
 
+def getprecedence(c):
+    if (c in precedence):
+        return precedence[c]
+    else:
+        return 6
+def formatregex(infix):
+    result = ''
+    allOperators = ['|', '?', '+', '*']
+    binaryOperators = ['|']
+    i = 0;
+    for c1 in infix:
+        if i + 1 < len(infix):
+            c2 = infix[i + 1]
+
+            result += c1
+
+            if (c1 != '(' and c2 != ')' and c2 not in allOperators and c1 not in binaryOperators):
+                result += '.'
+        i += 1
+
+    result += infix[len(infix) - 1]
+
+    return result;
+
+precedence = {'(': 1, '|': 2, '.': 3, '?': 4, '*': 4, '+': 4, '^': 5}
+
 # infix to postfix
 def toPostfix(infix):
-    specials = {dot,star,line}
-    stack = ''
     postfix = ''
-    for c in infix:
+
+    stack = []
+
+    formattedRegex = formatregex(infix);
+
+    for c in formattedRegex:
         if c == '(':
-            stack = stack + c
+            stack.append(c);
         elif c == ')':
-            while stack[-1] != '(':
-                postfix, stack = postfix + stack[-1], stack[:-1]
-            stack = stack[:-1]
-        elif c in specials:
-            while stack and specials.get(c, 0) <= specials.get(stack[-1], 0):
-                postfix, stack = postfix + stack[-1], stack[:-1]
-            stack = stack + c
+
+            while (stack[len(stack) - 1] != '('):
+                postfix += stack.pop()
+            stack.pop();
         else:
-            postfix = postfix + c
+            while (len(stack) > 0):
+                peekedChar = stack.pop()
+                stack.append(peekedChar)
+                peekedCharPrecedence = getprecedence(peekedChar)
+                currentCharPrecedence = getprecedence(c)
 
-    while stack:
-        postfix, stack = postfix + stack[-1], stack[:-1]
+                if (peekedCharPrecedence >= currentCharPrecedence):
 
-    return postfix
+                    postfix += stack.pop()
 
-    while (not isEmpty(stack)):
+                else:
+                    break;
+
+            stack.append(c)
+    while (len(stack) > 0):
         postfix += stack.pop()
-
-    return postfix
-
+    return postfix;
 
 class State:
-    
+
     def __init__(self, name):
         self.epsilon = []  # epsilon-closure
         self.transitions = {}  # char : state
@@ -118,7 +149,8 @@ class Handler:
         nfa_stack.append(nfa)
 
 def main():
-    infix = input('please enter RE: ')
+    with open('input.txt', 'r') as file:
+        infix = file.read().replace('\n', '')
     infix = infix.replace(' ', 'ε')
     postfix = toPostfix(infix)
     print(postfix)
