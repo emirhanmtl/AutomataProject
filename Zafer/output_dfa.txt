@@ -1,0 +1,10 @@
+1 0 
+Q0Q1Q2 Q3 Q4 
+Q0Q1Q2
+Q4 
+Q0Q1Q2 1 Q3
+Q0Q1Q2 0 Q3
+Q3 1 Q4
+Q3 0 trap
+Q4 1 trap
+Q4 0 trap
