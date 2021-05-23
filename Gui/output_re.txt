@@ -1,0 +1,10 @@
+a b
+Q3 Q4 Q2 Q1 Q5 Q6
+Q5
+Q6
+Q1 a Q2
+Q3 b Q4
+Q5 ε Q1
+Q5 ε Q3
+Q2 ε Q6
+Q4 ε Q6

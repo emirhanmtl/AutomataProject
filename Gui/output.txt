@@ -1,0 +1,4 @@
+ab -> Not accepted.
+a -> Accepted.
+ b -> Accepted.
+ 

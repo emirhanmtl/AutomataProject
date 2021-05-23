@@ -1,0 +1,10 @@
+a b 
+Q1Q3Q5 Q2Q6 Q4Q6 
+Q1Q3Q5
+Q2Q6 Q4Q6 
+Q1Q3Q5 a Q2Q6
+Q1Q3Q5 b Q4Q6
+Q2Q6 a trap
+Q2Q6 b trap
+Q4Q6 a trap
+Q4Q6 b trap

@@ -1,0 +1,68 @@
+# read data from text file
+f = open("output_dfa.txt", 'r')
+
+symbols = f.readline().split()
+states = f.readline().split()
+start_state = f.readline().strip()
+finish_states = f.readline().split()
+
+# transmisions is our delta
+transmissions = {}
+
+def letter_counter(input): #For counting the letters.
+    dict = {}
+    for l in input:
+        keys = dict.keys()
+        if l in keys:
+            dict[l] += 1
+        else:
+            dict[l] = 1
+    return dict
+
+# for reducing memory usage we use list for transmision and dicuse it in worksheet
+for x in states:
+    transmissions[x] = [None] * len(symbols)
+
+# here we dont use while loop because we are sure that each dfa delta function for every state has vertex by number of symbols letters
+for i in range(len(symbols) * len(states)):
+    trans = f.readline().split()
+    alp_index = symbols.index(trans[1])
+    transmissions[trans[0]][alp_index] = trans[2]
+# print(transmissions)
+
+
+
+f = open("strings.txt", "r")
+strings = f.read().splitlines()
+f2 = open("output.txt","w+")
+for string in strings:
+    print(string)
+    inputStr = string
+
+
+    # here we check if input string contains some letters that we dont have them in out symbols
+    # warn the user and wants input new string
+    string_letters = list(letter_counter(inputStr).keys())
+    if set(string_letters) - set(symbols) == set():
+        pass
+    else:
+        print("your string contains some letters that is not in your dfa symbols")
+        print("try again")
+        continue
+
+    # ps is stand for present state
+    ps = start_state
+    for char in inputStr:
+        try:
+            ps = transmissions[ps][symbols.index(char)]
+        except KeyError: #It will keep working if 'trap' statement comes.
+            continue
+
+
+    # after iteration bt symbols and
+    if (ps in finish_states):
+        f2.write('{string} accepted.\n')
+
+
+    else:
+        f2.write("string not accepted.\n")
